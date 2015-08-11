@@ -1,6 +1,6 @@
 /**
  * @callback Callback
- * @param {Object[]} [args]
+ * 	@param {Object[]} [args]
  */
 
 /** @namespace smooth_scroller */
@@ -11,12 +11,14 @@ var smooth_scroller = (function (self) {
 	 *  @param {Number} target_position - X or Y coordinate
 	 *  @param {Boolean} vertical - X or Y scroll
 	 *  @param {Object} parent - element should be srolled
-	 *  @param {Callback} callback - when scrolled
+	 *  @param {Callback} [callback] - when scrolled
 	 *  @param {Object[]} [args]
 	 * @static
 	 */
 	self.scrollToPosition = function (target_position, vertical, parent, callback, args)
 	{
+		var args = args || {};
+		var callback = callback || function(args){};
 		var now = vertical ? parent.scrollTop : parent.scrollLeft;
 		if (target_position > now)
 		{
@@ -55,25 +57,21 @@ var smooth_scroller = (function (self) {
 	};
 
 	/**
-	 * 
+	 * This method ables smooth scroll to element selected by id.
+		Important for Chrome! Works only in 100% scale.
 	 * @function scrollToId
 	 * @memberof smooth_scroller
 	 *  @param {String} id
 	 *	@param {Boolean} vertical
 	 * 	@param {Object} parent
-	 *  @param {Callback} callback
+	 *  @param {Callback} [callback]
 	 *  @param {Object[]} [args]
 	 * @static
 	 */
 	self.scrollToId = function (id, vertical, parent, callback, args)
 	{
-		/*
-
-		This method ables smooth scroll to element selected by id.
-		Important! works only in 100% scale.
-
-		*/
-
+		var args = args || {};
+		var callback callback || function(args){};
 		var target = document.getElementById(id);
 		if (vertical)
 			var target_position = target.offsetTop;
@@ -100,7 +98,7 @@ var smooth_scroller = (function (self) {
 	 */
 	self.scrollToHome = function ()
 	{
-		self.scrollToPosition(0, true, document.body, function(args) {}, {});
+		self.scrollToPosition(0, true, document.body);
 	};
 
 	/**
@@ -109,7 +107,7 @@ var smooth_scroller = (function (self) {
 	 * @memberof smooth_scroller
 	 * @static
 	 */
-	self.scrollToEnd = function ()
+	self.scrollToEnd = function ()  // strange function. 0_0
 	{
 		var page_count = document.getElementsByClassName("page").length;
 		var root = {};
@@ -120,13 +118,20 @@ var smooth_scroller = (function (self) {
 		if (page_count == 0)
 		{
 			if (navigator.userAgent.indexOf("Firefox") > -1)
-				setTimeout(function() {root.scrollTop = root.clientHeight;}, 1000);
+			{
+				setTimeout(
+					function() {
+						root.scrollTop = root.clientHeight;
+					},
+					1000
+				);
+			}
 			else
-				self.scrollToPosition(root.clientHeight, true, root, function(args) {}, {});
+				self.scrollToPosition(root.clientHeight, true, root);
 		}
 		else
 		{
-			self.scrollToPosition((page_count - 1) * root.clientHeight, true, root, function(args) {}, {});
+			self.scrollToPosition((page_count - 1) * root.clientHeight, true, root);
 		}
 	};
 

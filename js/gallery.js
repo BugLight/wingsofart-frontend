@@ -4,6 +4,7 @@
 		@param {String} [config.id]
 		@param {Number} config.slide_count
 		@param {Boolean} config.vertical
+ * @see smooth_scroller
  */
 Gallery = function (config)
 {
@@ -107,31 +108,38 @@ Gallery = function (config)
 	this.autoScroll = function (delay)
 	{
 		this.timer = setTimeout(function slide(gallery_obj) {
-			if (gallery_obj.scrolling)
+			if (gallery_obj.scrolling) // if already scrolling then wait
 			{
 				setTimeout(slide, delay, gallery_obj);
 				return;
 			}
-			gallery_obj.scrolling = true;	
-			if (gallery_obj.forward)
+
+			gallery_obj.scrolling = true;
+			if (gallery_obj.forward)  // check scroll direction
 				gallery_obj.slide++;
 			else
 				gallery_obj.slide--;
+
 			gallery_obj.changeDirectionIfNeeded();
-			args = {
-				slide: slide,
-				delay: delay, 
-				gallery_obj: gallery_obj
-			};  // for recurcive callback
+
+			args = {  // for recurcive timer
+				slide: slide,  // our timeout function
+				delay: delay,  // our delay
+				gallery_obj: gallery_obj  // this
+			};
+
 			var next = gallery_obj.id + "-" + gallery_obj.slide.toString();
-			smooth_scroller.scrollToId(next, gallery_obj.vertical, gallery_obj.getDom(), function(args) {
-				args.gallery_obj.timer = setTimeout(
-					args.slide, 
-					args.delay,
-					args.gallery_obj
-				);
-				args.gallery_obj.scrolling = false;
-			}, args);
+			smooth_scroller.scrollToId(next, gallery_obj.vertical, gallery_obj.getDom(),
+				function(args) {
+					args.gallery_obj.timer = setTimeout(  // new timeout
+						args.slide,
+						args.delay,
+						args.gallery_obj
+					);
+					args.gallery_obj.scrolling = false;  // scroll finished
+				},
+				args
+			);
 					
 		}, delay, this);
 		return this.timer;
@@ -146,15 +154,18 @@ Gallery = function (config)
 	 */
 	this.nextSlide = function ()
 	{
-		if (this.slide + 1 > this.slide_count || this.scrolling)
+		if (this.slide + 1 > this.slide_count || this.scrolling)  // dead end
 			return false
 		this.scrolling = true;
 		this.slide++;
 		var id_next = this.id + "-" + this.slide.toString();
-		smooth_scroller.scrollToId(id_next, this.vertical, this.getDom(), function(args) {
-			args.gallery_obj.changeDirectionIfNeeded();
-			args.gallery_obj.scrolling = false;
-		}, {gallery_obj: this});
+		smooth_scroller.scrollToId(id_next, this.vertical, this.getDom(),
+			function(args) {
+				args.gallery_obj.changeDirectionIfNeeded();
+				args.gallery_obj.scrolling = false;
+			},
+			{gallery_obj: this}
+		);
 		return true;
 	};
 
@@ -167,15 +178,18 @@ Gallery = function (config)
 	 */
 	this.previousSlide = function ()
 	{
-		if (this.slide - 1 < 1 || this.scrolling)
+		if (this.slide - 1 < 1 || this.scrolling)  // dead end
 			return false
 		this.scrolling = true;
 		this.slide--;
 		var id_next = this.id + "-" + this.slide.toString();
-		smooth_scroller.scrollToId(id_next, this.vertical, this.getDom(), function(args) {
-			args.gallery_obj.changeDirectionIfNeeded();
-			args.gallery_obj.scrolling = false;
-		}, {gallery_obj: this});
+		smooth_scroller.scrollToId(id_next, this.vertical, this.getDom(), 
+			function(args) {
+				args.gallery_obj.changeDirectionIfNeeded();
+				args.gallery_obj.scrolling = false;
+			}, 
+			{gallery_obj: this}
+		);
 		return true;
 	};
 };

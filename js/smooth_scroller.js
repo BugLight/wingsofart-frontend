@@ -5,24 +5,7 @@
 
 /** @namespace smooth_scroller */
 var smooth_scroller = (function (self) {
-	/*
-
-	Module methods:
-		public:
-			scrollToPosition(target_position, vertical, parent, callback, args)
-			scrollToId(id, vertical, callback, args)
-			scrollToHome()
-			scrollToEnd()
-	Module variables:
-		--
-	Module dependencies:
-		--
-
-	*/
-
-
 	/**
-	 * 
 	 * @function scrollToPosition
 	 * @memberof smooth_scroller
 	 *  @param {Number} target_position - X or Y coordinate
@@ -38,7 +21,6 @@ var smooth_scroller = (function (self) {
 		if (target_position > now)
 		{
 			var j = target_position - now;
-			console.log(j);
 			var timer = setTimeout(function scrollForward(j) {
 				if (j == 0)
 				{
@@ -56,7 +38,6 @@ var smooth_scroller = (function (self) {
 		else
 		{
 			var j = now - target_position;
-			console.log(j);
 			var timer = setTimeout(function scrollBack(j) {
 				if (j == 0)
 				{

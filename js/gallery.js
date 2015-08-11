@@ -16,7 +16,7 @@ TODO:
 		@param {Number} config.slide_count
 		@param {Boolean} config.vertical
  */
-self.Gallery = function (config)
+Gallery = function (config)
 {
 	var config = config || {};
 	if (config.hasOwnProperty("slide_count"))
@@ -162,7 +162,6 @@ self.Gallery = function (config)
 		this.scrolling = true;
 		this.slide++;
 		var id_next = this.id + "-" + this.slide.toString();
-		console.log(id_next);
 		smooth_scroller.scrollToId(id_next, this.vertical, this.getDom(), function(args) {
 			args.gallery_obj.changeDirectionIfNeeded();
 			args.gallery_obj.scrolling = false;

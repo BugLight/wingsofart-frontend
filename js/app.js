@@ -18,7 +18,11 @@ var app = {
 	{
 		smooth_scroller.scrollToEnd();
 	},
-	
+
+	form_check: function () {
+		return jc_chkscrfrm(this, false, false, false, false);
+	},
+
 	/**
 	 * Called when document loaded
 	 * @function main
@@ -56,5 +60,8 @@ var app = {
 		{
 			sale.checkSale(links[i]);
 		}
+
+		var subcribe = document.getElementById("subscr-form-7196");
+		lib.addCrossBrowserEvent(subcribe, "submit", this.form_check);
 	}
 };

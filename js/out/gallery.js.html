@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: gallery.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: gallery.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/*
+
+TODO:
+	- Make gallery class DONE
+	- Make usable constructors
+
+*/
+
+var smooth_scroller = smooth_scroller || false;
+
+/** @namespace gallery*/
+var gallery = (function (self, smooth_scroller) {
+	/*
+	Module classes:
+		Gallery:
+			public:
+				autoScroll(delay) | returns timer_id
+				nextSlide()
+				previousSlide()
+	Module functions: - in progress
+		createGalleryWidget() - feauture
+		initGalleryFromObject(id, slides, vertical) | returns gallery_instance
+	Module variables:
+		--
+	Module dependencies:
+		smooth_scroller
+
+	*/
+
+
+	if (!smooth_scroller)
+	{
+		console.log("Failed to load smooth_scroller!");
+		return {};
+	}
+
+	/**
+	 * @class Gallery
+	 * @memberof gallery
+	 *  @param {Object} config Init configuration
+			@param {String} [config.id]
+			@param {Number} config.slide_count
+			@param {Boolean} config.vertical
+	 */
+	self.Gallery = function (config)
+	{
+		var config = config || {};
+
+		if (config.hasOwnProperty("slide_count"))
+			/** @member {Number} gallery.Gallery.slide_count
+ 			 * @instance
+			 */
+			this.slide_count = config.slide_count;
+		else
+			throw new Error("Configuration is incorrect!");
+		if (config.hasOwnProperty("vertical"))
+			/** @member {Boolean} gallery.Gallery.vertical
+			 * @instance
+			 */
+			this.vertical = config.vertical;
+		else
+			throw new Error("Configuration is incorrect!");
+
+		if (config.hasOwnProperty("id"))
+		{
+			/** @member {String} gallery.Gallery.id
+			 * @instance
+			 */
+			this.id = config.id;
+		}
+		else
+		{
+
+		}
+
+		/** @member {Number} gallery.Gallery.slide
+		 * @instance
+		 */
+		this.slide = 1;
+		/** @member {Number} gallery.Gallery.timer
+ 		 * @instance
+		 */
+		this.timer = null;
+		/** @member {Boolean} gallery.Gallery.forward
+		 * @instance
+		 */
+		this.forward = true;
+		
+
+		/**
+		 * Changes direction, the slides following.
+		 * @function changeDirection
+		 * @memberof gallery.Gallery
+		 * @instance
+		 */
+		this.changeDirection = function ()
+		{
+			this.forward = !this.forward;
+		};
+
+		/**
+		 * Changes direction if reached end of slides.
+		 * @function changeDirectionIfNeeded
+		 * @memberof gallery.Gallery
+		 * @instance
+		 */
+		this.changeDirectionIfNeeded = function ()
+		{
+			if (this.slide == this.slide_count)
+				this.forward = false;
+			if (this.slide == 1)
+				this.forward = true;
+		};
+
+		/**
+		 * If gallery is auto scrolling, then stops.
+		 * @function stopScroll
+		 * @memberof gallery.Gallery
+		 * @instance
+		 */
+		this.stopScroll = function ()
+		{
+			if (this.timer != null)
+				clearTimeout(this.timer);
+		};
+
+		/**
+		 * Returns dom object of gallery.
+		 * @function getDom
+		 * @memberof gallery.Gallery
+		 * @returns {Object} Dom object of gallery
+		 * @instance
+		 */
+		this.getDom = function () {
+			return document.getElementById(this.id);
+		}
+
+		/**
+		 * Starts scrolling slides in gallery.
+		 * @function autoScroll
+		 * @memberof gallery.Gallery
+		 *  @param {Number} delay Time between slides
+		 * @returns {Number} Timer id
+		 * @instance
+		 */
+		this.autoScroll = function (delay)
+		{
+			this.timer = setTimeout(function slide(gallery_obj) {			
+				if (gallery_obj.forward)
+					gallery_obj.slide++;
+				else
+					gallery_obj.slide--;
+				gallery_obj.changeDirectionIfNeeded();
+
+				args = {
+					slide: slide,
+					delay: delay, 
+					gallery_obj: gallery_obj
+				};  // for recurcive callback
+				var next = gallery_obj.id + "-" + gallery_obj.slide.toString();
+				smooth_scroller.scrollToId(next, gallery_obj.vertical, gallery_obj.getDom(), function(args) {
+					setTimeout(
+						args.slide, 
+						args.delay,
+						args.gallery_obj
+					);
+				}, args);
+					
+			}, delay, this);
+			return this.timer;
+		};
+
+		/**
+		 * Scrolls to next slide.
+		 * @function nextSlide
+		 * @memberof gallery.Gallery
+		 * @returns {Boolean} Success
+		 * @instance
+		 */
+		this.nextSlide = function ()
+		{
+			if (this.slide + 1 > this.slide_count)
+				return false
+			this.slide++;
+			var id_next = this.id + "-" + this.slide.toString();
+			console.log(id_next);
+			smooth_scroller.scrollToId(id_next, this.vertical, this.getDom(), function(args) {
+				args.gallery_obj.changeDirectionIfNeeded();
+			}, {gallery_obj: this});
+			return true;
+		};
+
+		/**
+		 * Scrolls to previous.
+		 * @function previousSlide
+		 * @memberof gallery.Gallery
+		 * @return {Boolean} Success
+		 * @instance
+		 */
+		this.previousSlide = function ()
+		{
+			if (this.slide - 1 &lt; 1)
+				return false
+			this.slide--;
+			var id_next = this.id + "-" + this.slide.toString();
+			smooth_scroller.scrollToId(id_next, this.vertical, this.getDom(), function(args) {
+				args.gallery_obj.changeDirectionIfNeeded();
+			}, {gallery_obj: this});
+			return true;
+		};
+	};
+
+return self;
+}(gallery || {}, smooth_scroller));</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="gallery.Gallery.html">Gallery</a></li></ul><h3>Namespaces</h3><ul><li><a href="gallery.html">gallery</a></li><li><a href="lib.html">lib</a></li><li><a href="smooth_scroller.html">smooth_scroller</a></li></ul><h3><a href="global.html">Global</a></h3>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.2</a> on Mon Aug 03 2015 23:19:05 GMT+0400 (Московское время (лето))
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

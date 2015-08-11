@@ -1,14 +1,3 @@
-/*
-
-TODO:
-	- Make gallery class DONE
-	- Make usable constructors
-
-*/
-
-
-
-
 /**
  * @class Gallery
  *  @param {Object} config Init configuration
@@ -136,7 +125,7 @@ Gallery = function (config)
 			};  // for recurcive callback
 			var next = gallery_obj.id + "-" + gallery_obj.slide.toString();
 			smooth_scroller.scrollToId(next, gallery_obj.vertical, gallery_obj.getDom(), function(args) {
-				setTimeout(
+				args.gallery_obj.timer = setTimeout(
 					args.slide, 
 					args.delay,
 					args.gallery_obj

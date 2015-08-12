@@ -44,7 +44,6 @@ Gallery = function (config)
 			if (this.width > dom.children[0].clientWidth)
 				this.slide_count -= Math.floor(this.width / dom.children[0].clientWidth);
 		}
-		console.log(this.slide_count);
 	}
 
 	/** @member {Number} Gallery.slide

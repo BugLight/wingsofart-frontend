@@ -24,24 +24,8 @@ Page style.
 	}
 }
 
-@keyframes footer_scroll {
-	from {
-		height: 8%;
-	}
-
-	to {
-		height: 40%;
-	}
-}
-
-@keyframes footer_unscroll {
-	from {
-		height: 40%;
-	}
-
-	to {
-		height: 8%;
-	}
+html {
+	padding: 0;
 }
 
 body {
@@ -62,7 +46,25 @@ header {
 	height: 10%;
 }
 
-header h1 {
+/*
+
+IE8
+
+*/
+
+div.header {
+	display: inline-block;
+	margin-bottom: 1%;
+	top: 0;
+	margin: 0;
+	padding-top: 1%;
+	padding-bottom: 10px;
+	width: 100%;
+	background-color: #fbf4d7;
+	height: 10%;
+}
+
+header h1, div.header h1 {
 	color: rgb(42, 172, 172);
 	margin-top: 5px;
 	margin-left: 95px;
@@ -140,27 +142,36 @@ div#comments {
 }
 
 footer {
-	animation: footer_unscroll 1s;
 	background-color: #888;
 	color: #fff;
 	position: absolute;
 	display: block;
 	width: 100%;
-	height: 8%;
+	height: 20%;
 	overflow-y: hidden;
 	margin-top: 1%;
 }
 
-footer:hover {
-	animation: footer_scroll 1s;
-	height: 40%;
+/*
+
+IE 8
+
+*/
+
+div.footer {
+	background-color: #888;
+	color: #fff;
+	display: block;
+	width: 100%;
+	overflow-y: hidden;
+	margin-top: 1%;
 }
 
-footer h4 {
+footer h4, div.footer h4 {
 	margin-top: 0;
 }
 
-footer div {
+footer div, div.footer div {
 	display: inline-block;
 	margin-right: 0%;
 	width: 20%;
@@ -170,14 +181,14 @@ footer div {
 
 div.content h1 {
 	font-size: 1.8em;
-	font-style: bold;
+	font-weight: bold;
 	font-family: Times, sans-serif;
 	letter-spacing: 2px;
 	color: rgb(42, 172, 172);
 }
 
 div.content h2 {
-	font-style: bold;
+	font-weight: bold;
 	font-size: 1.2em;
 	color: #43e3de;
 	margin-top: 0;
@@ -185,6 +196,7 @@ div.content h2 {
 }
 
 div.content h3 {
+	text-decoration: none;
 	font-size: 1em;
 	color: #555;
 	margin-top: 0;
@@ -201,7 +213,7 @@ div.content h3.emotion {
 
 div.content-comments h3 {
 	color: rgb(42, 172, 172);
-	font-style: bold;
+	font-weight: bold;
 	font-size: 1em;
 	text-align: left;
 	margin: 0;
@@ -244,6 +256,7 @@ div#images {
 }
 
 div.content-gallery img {
+	border-width: 0;
 	margin-top: 0;
 	margin-bottom: 0;
 	height: 70%;
@@ -254,11 +267,15 @@ div.content-gallery > span {
 	margin-top: 0;
 	position: relative;
 	display: inline-block;
-	width: 270px;
+	width: 25%;
 	height: 210px;
 	margin-right: 0px;
 	text-align: center;
 	vertical-align: top;
+}
+
+div.content-gallery a {
+	text-decoration: none;
 }
 
 div#comments span {
@@ -292,8 +309,6 @@ a.arrow {
 	height: 145px;
 	cursor: pointer;
 	vertical-align: middle;
-	font-weight: bolder;
-	font-style: bold;
 }
 
 a.arrow img {
@@ -323,7 +338,7 @@ em {
 
 span.copy {
 	position: absolute;
-	margin-top: 2%;
+	margin-top: 1%;
 	font-size: 0.9em;
 }
 

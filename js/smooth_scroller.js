@@ -25,9 +25,9 @@ var smooth_scroller = (function (self) {
 		if (navigator.userAgent.indexOf("Firefox") > -1)
 		{
 			if (vertical)
-				parent.scrollBy({top: target_position, behavior: "smooth"});
+				parent.scrollTo({top: target_position, behavior: "smooth"});
 			else
-				parent.scrollBy({left: target_position, behavior: "smooth"});
+				parent.scrollTo({left: target_position, behavior: "smooth"});
 			callback(args);
 			return;
 		}
@@ -110,7 +110,12 @@ var smooth_scroller = (function (self) {
 	 */
 	self.scrollToHome = function ()
 	{
-		self.scrollToPosition(0, true, document.body);
+		var root = {};
+		if (navigator.userAgent.indexOf("Firefox") > -1)
+			root = document.documentElement;
+		else
+			root = document.body;
+		self.scrollToPosition(0, true, root);
 	};
 
 	/**

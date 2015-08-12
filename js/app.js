@@ -29,8 +29,6 @@ var app = {
 	 */
 	main: function ()
 	{
-		console.log("Document loaded!");
-
 		var image_count = document.getElementById("gallery").childElementCount - 2;
 		this.gallery = new Gallery({
 			id: "gallery",

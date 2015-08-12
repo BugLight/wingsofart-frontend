@@ -84,7 +84,7 @@ div.header {
 	height: 10%;
 }
 
-header h1 {
+header h1, div.header h1 {
 	color: rgb(42, 172, 172);
 	margin-top: 5px;
 	margin-left: 95px;
@@ -178,11 +178,26 @@ footer:hover {
 	height: 40%;
 }
 
-footer h4 {
+/*
+
+IE 8
+
+*/
+
+div.footer {
+	background-color: #888;
+	color: #fff;
+	display: block;
+	width: 100%;
+	overflow-y: hidden;
+	margin-top: 1%;
+}
+
+footer h4, div.footer h4 {
 	margin-top: 0;
 }
 
-footer div {
+footer div, div.footer div {
 	display: inline-block;
 	margin-right: 0%;
 	width: 20%;
@@ -207,6 +222,7 @@ div.content h2 {
 }
 
 div.content h3 {
+	text-decoration: none;
 	font-size: 1em;
 	color: #555;
 	margin-top: 0;
@@ -266,6 +282,7 @@ div#images {
 }
 
 div.content-gallery img {
+	border-width: 0;
 	margin-top: 0;
 	margin-bottom: 0;
 	height: 70%;
@@ -281,6 +298,10 @@ div.content-gallery > span {
 	margin-right: 0px;
 	text-align: center;
 	vertical-align: top;
+}
+
+div.content-gallery a {
+	text-decoration: none;
 }
 
 div#comments span {

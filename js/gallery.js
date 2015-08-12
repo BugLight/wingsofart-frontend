@@ -37,13 +37,14 @@ Gallery = function (config)
 		if (this.vertical)
 		{
 			if (this.height > dom.children[0].clientHeight)
-				this.slide_count -= Math.round(this.height / dom.children[0].clientHeight) - 1;
+				this.slide_count -= Math.floor(this.height / dom.children[0].clientHeight);
 		}
 		else
 		{
 			if (this.width > dom.children[0].clientWidth)
-				this.slide_count -= Math.round(this.width / dom.children[0].clientWidth) - 1;
+				this.slide_count -= Math.floor(this.width / dom.children[0].clientWidth);
 		}
+		console.log(this.slide_count);
 	}
 
 	/** @member {Number} Gallery.slide

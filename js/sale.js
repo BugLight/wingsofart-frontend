@@ -1,8 +1,7 @@
-/*
-make normal doc!!!
-*/
-
-/** @namespace sale*/
+/**
+ * 
+ * @namespace sale
+ */
 var sale = (function (self, lib) {
 	if (!lib)
 	{

@@ -38,7 +38,7 @@ var sale = (function (self, lib) {
 		lib.load(url, function (args)
 		{
 			var page = args.response;
-			if (page.toLowerCase().includes(template))
+			if (page.toLowerCase().indexOf(template) > -1)
 			{
 				self.makeSale(link);
 			}

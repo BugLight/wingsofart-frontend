@@ -14,11 +14,6 @@ var app = {
 		app.gallery.nextSlide();
 	},
 
-	footer_scroll: function ()
-	{
-		smooth_scroller.scrollToEnd();
-	},
-
 	form_check: function () {
 		return jc_chkscrfrm(this, false, false, false, false);
 	},
@@ -50,9 +45,6 @@ var app = {
 				vertical: true
 			});
 			this.comments.autoScroll(15000);
-
-			var footer = document.getElementsByTagName("footer")[0];
-			lib.addCrossBrowserEvent(footer, "mouseenter", this.footer_scroll);
 
 			var btn_left = document.getElementById("left");
 			var btn_right = document.getElementById("right");

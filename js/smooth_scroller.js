@@ -22,6 +22,15 @@ var smooth_scroller = (function (self) {
 	{
 		var args = args || {};
 		var callback = callback || function(args){};
+		if (navigator.userAgent.indexOf("Firefox") > -1)
+		{
+			if (vertical)
+				parent.scrollBy({top: target_position, behavior: "smooth"});
+			else
+				parent.scrollBy({left: target_position, behavior: "smooth"});
+			callback(args);
+			return;
+		}
 		var now = vertical ? parent.scrollTop : parent.scrollLeft;
 		if (target_position > now)
 		{
@@ -110,32 +119,14 @@ var smooth_scroller = (function (self) {
 	 * @memberof smooth_scroller
 	 * @static
 	 */
-	self.scrollToEnd = function ()  // strange function. 0_0
+	self.scrollToEnd = function ()
 	{
-		var page_count = document.getElementsByClassName("page").length;
 		var root = {};
 		if (navigator.userAgent.indexOf("Firefox") > -1)
 			root = document.documentElement;
 		else
 			root = document.body;
-		if (page_count == 0)
-		{
-			if (navigator.userAgent.indexOf("Firefox") > -1)
-			{
-				setTimeout(
-					function() {
-						root.scrollTop = root.clientHeight;
-					},
-					1000
-				);
-			}
-			else
-				self.scrollToPosition(root.clientHeight, true, root);
-		}
-		else
-		{
-			self.scrollToPosition((page_count - 1) * root.clientHeight, true, root);
-		}
+		self.scrollToPosition(root.clientHeight, true, root);
 	};
 
 return self;

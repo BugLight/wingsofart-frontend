@@ -31,6 +31,19 @@ Gallery = function (config)
 		 * @instance
 		 */
 		this.id = config.id;
+		var dom = document.getElementById(this.id);
+		this.width = dom.clientWidth;
+		this.height = dom.clientHeight;
+		if (this.vertical)
+		{
+			if (this.height > dom.children[0].clientHeight)
+				this.slide_count -= Math.round(this.height / dom.children[0].clientHeight) - 1;
+		}
+		else
+		{
+			if (this.width > dom.children[0].clientWidth)
+				this.slide_count -= Math.round(this.width / dom.children[0].clientWidth) - 1;
+		}
 	}
 
 	/** @member {Number} Gallery.slide

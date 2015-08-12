@@ -31,7 +31,7 @@ var app = {
 	{
 		console.log("Document loaded!");
 
-		var image_count = document.getElementById("gallery").childElementCount - 2;
+		var image_count = document.getElementById("gallery").childElementCount;
 		this.gallery = new Gallery({
 			id: "gallery",
 			slide_count: image_count,

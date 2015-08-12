@@ -13,24 +13,30 @@
 	<body onload="app.main();">
 		<!--[if (!IE) | (gt IE 8)]>-->
 		<header>
+		<!--<![endif]-->
+		<!--[if lt IE 9]>
+		<div class="header">
+		<![endif]-->	
+		<!--[if (!IE) | (gt IE 8)]>-->
+		</header>
+		<![endif]-->
 			<img class="logo" title="Wings of Art" alt="Wings of Art" src="./img/logo.png">
 			<h1>
 				Видео мастер-классы от творческой студии Wings of Art / Крылья Искусства
 			</h1>
-		</header>
-		<!--<![endif]-->
 		<!--[if lt IE 9]>
-			<h1><img width="130" height="100" title="Wings of Art" alt="Wings of Art" src="./img/png">
-			Видео мастер-классы от творческой студии Wings of Art / Крылья Искусства</h1>
+		</div>
 		<![endif]-->
+		
+		<!--[if (!IE) | (gt IE 8)]>-->
 		<a class="arrow" id="left">
 			<img src="./img/grey_arrow_left.png">
 		</a>
 		<a class="arrow" id="right">
 			<img src="./img/grey_arrow_right.png">
 		</a>
+		<![endif]-->
 		<div class="content">
-			<!--[if (!IE) | (gt IE 8)]>-->
 			<div id="gallery" class="content-gallery">
 				<span id="gallery-1">
 					<h3 class="emotion">Стильный аксессуар!</h3>
@@ -82,7 +88,6 @@
 					</a>
 				</span>
 			</div>
-			<!--<![endif]-->
 			<div style="width: 50%;" class="content-paragraph">
 				Как здорово осваивать новые техники и совершенствовать свое мастерство в студии на живых мастер-классах у опытного мастера! Но если студия далеко? Если у Вас нет времени на поездку в студию? Если Вы хотели бы спокойно и внимательно, и не один раз,  рассмотреть все тонкости, нюансы и секреты работы опытного мастера, тогда <em>Вам необходим видео мастер-класс!</em>
 			</div>
@@ -172,7 +177,12 @@
 				</ul>
 			</div>
 		</div>
+		<!--[if (!IE) | (gt IE 8)]>-->
 		<footer>
+		<![endif]-->
+		<!--[if lt IE 9]>
+		<div class="footer">
+		<![endif]-->
 			<div>
 				<p>тел: + 7-925-357-12-92</p>
                 <p>Все права защищены. Копирование материалов сайта запрещено</p>
@@ -195,6 +205,11 @@
 				</p>
 			</div>
 			<span class="copy">&copy; Студия "Wings of Art" 2015</span>
+		<!--[if (!IE) | (gt IE 8)]>-->
 		</footer>
+		<![endif]-->
+		<!--[if lt IE 9]>
+		</div>
+		<![endif]-->
 	</body>
 </html>

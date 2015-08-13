@@ -1,8 +1,7 @@
-/*
-make normal doc!!!
-*/
-
-/** @namespace sale*/
+/**
+ * 
+ * @namespace sale
+ */
 var sale = (function (self, lib) {
 	if (!lib)
 	{
@@ -38,7 +37,7 @@ var sale = (function (self, lib) {
 		lib.load(url, function (args)
 		{
 			var page = args.response;
-			if (page.toLowerCase().includes(template))
+			if (page.toLowerCase().indexOf(template) > -1)
 			{
 				self.makeSale(link);
 			}
